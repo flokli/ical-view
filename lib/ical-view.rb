@@ -86,6 +86,7 @@ module ICalViewer
   def self.run argv
     o = Parser.parse argv
     u = Utils.new o
+    t = Terminal::Table.new headings: [ '#', 'tz', 'start', 'end', 'summary' ]
 
     o[:files].map { |f| Pathname.new(f).expand_path }.each do |file|
       u.dbg "Opening #{file}"
@@ -102,20 +103,18 @@ module ICalViewer
 
       u.dbg "Starting table creation"
       cals.each do |cal|
-        tab   = Terminal::Table.new headings: [ '#', 'tz', 'start', 'end', 'summary' ]
-
         u.dbg "Creating rows for events"
         cal.events.each_with_index do |event, i|
           u.dbg "Creating row for event: #{event}"
 
           ary = [i, event.dtstart.ical_params['tzid'], event.dtstart, event.dtend, event.summary]
 
-          tab.add_row ary
+          t.add_row ary
         end
 
-        puts tab.to_s
       end
     end
+    puts t.to_s
   end
 
 end
