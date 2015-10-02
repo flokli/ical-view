@@ -70,7 +70,7 @@ module ICalViewer
     end
 
     def dbg *strs
-      strs.each { |s| puts s } if @opts[:debug]
+      strs.each { |s| puts "\t[DEBUG]:\t#{s}".colorize(color: :yellow, background: :black) } if @opts[:debug]
     end
 
     def self.files opts
