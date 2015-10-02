@@ -102,12 +102,15 @@ module ICalViewer
 
       u.dbg "Starting table creation"
       cals.each do |cal|
-        tab   = Table.new headings: [ '#', 'tz', 'start', 'end', 'summary' ]
+        tab   = Terminal::Table.new headings: [ '#', 'tz', 'start', 'end', 'summary' ]
 
         u.dbg "Creating rows for events"
-        cal.events.each do |event|
+        cal.events.each_with_index do |event, i|
           u.dbg "Creating row for event: #{event}"
-          tab.new_row event
+
+          ary = [i, event.dtstart.ical_params['tzid'], event.dtstart, event.dtend, event.summary]
+
+          tab.add_row ary
         end
 
         puts tab.to_s
