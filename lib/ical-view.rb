@@ -92,7 +92,13 @@ module ICalViewer
       f     = File.open file
 
       u.dbg "Parsing #{file}"
-      cals  = Icalendar.parse f
+      begin
+        cals  = Icalendar.parse f
+      rescue ArgumentError => e
+        u.err "Cannot parse #{file}"
+        u.err e.to_s
+        next
+      end
 
       u.dbg "Starting table creation"
       cals.each do |cal|
