@@ -88,6 +88,8 @@ module ICalViewer
     u = Utils.new o
     t = Terminal::Table.new headings: [ '#', 'tz', 'start', 'end', 'summary' ]
 
+    i = 0
+
     o[:files].map { |f| Pathname.new(f).expand_path }.each do |file|
       u.dbg "Opening #{file}"
       f     = File.open file
@@ -104,12 +106,13 @@ module ICalViewer
       u.dbg "Starting table creation"
       cals.each do |cal|
         u.dbg "Creating rows for events"
-        cal.events.each_with_index do |event, i|
+        cal.events.each do |event|
           u.dbg "Creating row for event: #{event}"
 
           ary = [i, event.dtstart.ical_params['tzid'], event.dtstart, event.dtend, event.summary]
 
           t.add_row ary
+          i += 1
         end
 
       end
