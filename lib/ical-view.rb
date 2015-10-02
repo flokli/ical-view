@@ -73,6 +73,10 @@ module ICalViewer
       strs.each { |s| puts "\t[DEBUG]:\t#{s}".colorize(color: :yellow, background: :black) } if @opts[:debug]
     end
 
+    def err *strs
+      strs.each { |s| puts "\t[ERROR]:\t#{s}".colorize(color: :white, background: :red) }
+    end
+
     def self.files opts
       opts.select { |a| File.file? Pathname.new(a).expand_path }
     end
