@@ -96,7 +96,7 @@ module ICalViewer
 
       u.dbg "Parsing #{file}"
       begin
-        cals  = Icalendar.parse f
+        cals  = Icalendar::Calendar.parse f
       rescue ArgumentError => e
         u.err "Cannot parse #{file}"
         u.err e.to_s
