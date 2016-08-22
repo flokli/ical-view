@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'ical-viewer'
+require 'ical-view'
 
 ICalViewer.run ARGV
